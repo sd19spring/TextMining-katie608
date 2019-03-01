@@ -1,5 +1,12 @@
 """
 Project 3 Text Miner Assignment
+Ideas
+-Compare text from the 1500s on every 50 years and look at word freqency
+-compare certain works or famous speeches to different reading levels examples
+-different dialects of english, maybe different parts of US
+-famous speeches and what made them great? Make something like a famous speech from that?
+-company mottos or their very vauge descriptions
+-
 """
 
 import math
