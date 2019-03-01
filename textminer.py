@@ -1,6 +1,7 @@
 """
 Project 3 Text Miner Assignment
 """
+
 import math
 
 def get_lines(filename):
