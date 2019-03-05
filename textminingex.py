@@ -1,69 +1,22 @@
 """
-Project 3 Text Miner Assignment
-Ideas
--Compare text from the 1500s on every 50 years and look at word freqency
-    -"translate" something from one era's dialect to another's? If possible
--compare certain works or famous speeches to different reading levels examples
--different dialects of english, maybe different parts of US
--famous speeches and what made them great? Make something like a famous speech from that?
--company mottos or their very vauge descriptions
--famous speeches and find most commonly repeated phrases and how often
- they are repeated vs non-famous speeches?
- https://www.americanrhetoric.com/top100speechesall.html
- https://www.americanrhetoric.com/speechbankm-r.htm
- https://www.bartleby.com/268/
- http://www.historyplace.com/speeches/previous.htm
+Example class for downloading and storing text files.
+
+Uses a local file cache to avoid repeatedly downloading
+
+>>> moby = Text("http://www.gutenberg.org/files/2701/2701-0.txt") # doctest: +ELLIPSIS
+INFO: 'http://www.gutenberg.org/files/2701/2701-0.txt' found in ...
+>>> print(moby.text[27802:27818])
+Call me Ishmael.
 """
-import math
+
+# In your code you can try using a database or pickle instead of saving files
+# This example does not do any processing or cleaning on the text data
+# (but you should)
+
 import os
 import requests
 import sys
 import time
-
-def get_lines(filename):
-    """
-    Read all lines from `filename` and return a list of strings,
-    one per line, with whitespace stripped from the ends.
-
-    >>> lines_list = get_lines("Macbeth.txt")
-    >>> print(lines_list[0:2])
-    ['Tomorrow, and tomorrow, and tomorrow,', 'Creeps in this petty pace from day to day,']
-    """
-    lines = []
-    with open(filename) as fp:
-        for line in fp:
-            # Remove whitespace (or do whatever other processing you like)
-            processed_line = line.strip()
-            lines.append(processed_line)
-    return lines
-
-def get_words(lines_list):
-    """
-    Takes in lines_list and returns a list of strings as words,
-    with whitespace and punctuation stripped from the ends.
-
-    >>> words_list = get_words(get_lines("Macbeth.txt"))
-    >>> print(words_list[4:14])
-    ['tomorrow', 'creeps', 'in', 'this', 'petty', 'pace', 'from', 'day', 'to', 'day']
-    """
-    words_list = []
-    for line in lines_list:
-        line = line + " "
-        processed_line = line.strip('#$%&()*+-/:;""''<=>@[\]^_`{|}~')
-        i = 0
-        j = 0
-        while i < len(processed_line):
-            if processed_line[i] == " ":
-                word = processed_line[j:i]
-                word = word.strip('!#$%&()*+,-./:;""''<=>?@[\]^_`{|}~ ')
-                word = word.lower()
-                if word != "":
-                    words_list.append(word)
-                    j = i
-                i += 1
-            else:
-                i += 1
-    return words_list
 
 def strip_scheme(url):
     """
@@ -80,6 +33,7 @@ def strip_scheme(url):
     # https://docs.python.org/3/library/urllib.parse.html
     scheme, remainder = url.split("://")
     return remainder
+
 
 class Text:
     """
@@ -141,13 +95,31 @@ class Text:
             self.text = fp.read()
 
 
-# Run this code when called from the command line
-if __name__ == "__main__":
-    import doctest
+def run_example():
+    """
+    Return a dictionary with key: book title, value: Text objects for books.
+    """
+    import time
 
-    # Test get_words helper function
-    # words_list = get_words(get_lines("Macbeth.txt"))
-    # print(words_list)
+    urls = { "Pride and Prejudice": "http://www.gutenberg.org/files/1342/1342-0.txt",
+             "Moby Dick": "http://www.gutenberg.org/files/2701/2701-0.txt",
+             "Iliad": "http://www.gutenberg.org/ebooks/6130.txt.utf-8"
+           }
 
-    # Run all doctests in this file
-    doctest.testmod()
+    texts = {}
+    for title, url in urls.items():
+        t = Text(url)
+        texts[title] = t
+
+    return texts
+
+
+if __name__ == '__main__':
+    #import doctest
+    #doctest.testmod()
+
+    from pprint import pprint   # "Pretty-print" dictionary
+    books = run_example()
+    pprint(books)
+    #for title, book in books.items():
+    #    print(book.text[2000:2010])import sys
