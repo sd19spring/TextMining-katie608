@@ -19,6 +19,7 @@ import os
 import requests
 import sys
 import time
+import urllib.request
 
 def get_lines(filename):
     """
@@ -140,10 +141,45 @@ class Text:
         with open(self.local_fn, 'r') as fp:
             self.text = fp.read()
 
+def get_files():
+    """
+    Downloads html from files as text
+    """
+    import time
+
+    urls = { "MLK": "https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
+             "JFK": "https://www.americanrhetoric.com/speeches/jfkinaugural.htm",
+             "FDR": "https://www.americanrhetoric.com/speeches/fdrfirstinaugural.html"
+           }
+
+    # texts = {}
+    for title, url in urls.items():
+        # t = Text(url)
+        # texts[title] = t
+        # return texts
+        urllib.request.urlretrieve(url,"Example"+str(title)+".txt")
+
+def extract_speech(speech_fn):
+
+    fin = open(speech_fn, "r")
+    # fout = open(speech_fn, 'w')
+    for line in fin:
+        start_num = line.find('AUTHENTICITY CERTIFIED: Text version below transcribed directly from audio. (2)')
+        # print(line)
+    #     line = line.replace(pattern, replacement)
+    #     fin.write(line)
+    # fin.close()
+    # fout.close()
+    return start_num
 
 # Run this code when called from the command line
 if __name__ == "__main__":
     import doctest
+    # print(requests.get("https://www.americanrhetoric.com/speeches/mlkihaveadream.htm").text)
+
+
+    # get_files()
+    extract_speech("ExampleMLK.txt")
 
     # Test get_words helper function
     # words_list = get_words(get_lines("Macbeth.txt"))

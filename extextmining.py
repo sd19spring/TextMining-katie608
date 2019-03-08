@@ -101,9 +101,9 @@ def run_example():
     """
     import time
 
-    urls = { "Pride and Prejudice": "http://www.gutenberg.org/files/1342/1342-0.txt",
-             "Moby Dick": "http://www.gutenberg.org/files/2701/2701-0.txt",
-             "Iliad": "http://www.gutenberg.org/ebooks/6130.txt.utf-8"
+    urls = { "MLK": "https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
+             "JFK": "https://www.americanrhetoric.com/speeches/jfkinaugural.htm",
+             "FDR": "https://www.americanrhetoric.com/speeches/fdrfirstinaugural.html"
            }
 
     texts = {}
