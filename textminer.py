@@ -1,5 +1,7 @@
 """
 Project 3 Text Miner Assignment
+Katie Foster
+
 -famous speeches and what made them great? Make something like a famous speech from that?
 -famous speeches and find most commonly repeated phrases and how often
  they are repeated vs non-famous speeches?
@@ -7,10 +9,8 @@ Project 3 Text Miner Assignment
  https://www.americanrhetoric.com/speechbankm-r.htm
  https://www.bartleby.com/268/
  http://www.historyplace.com/speeches/previous.htm
- TODO: implement cache
+ TODO:
  analyze text
- cut off beginning and end of html
- put downloaded speeches in git ignore
 """
 import math
 import os
@@ -20,6 +20,17 @@ import time
 import urllib.request
 from bs4 import BeautifulSoup
 import requests
+
+url_list = ["https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
+"https://www.americanrhetoric.com/speeches/jfkinaugural.htm",
+"https://www.americanrhetoric.com/speeches/fdrpearlharbor.htm",
+"https://www.americanrhetoric.com/speeches/barbarajordan1976dnc.html",
+"https://www.americanrhetoric.com/speeches/richardnixoncheckers.html",
+"https://www.americanrhetoric.com/speeches/ronaldreaganchallenger.htm",
+"https://www.americanrhetoric.com/speeches/jfkhoustonministers.html",
+"https://www.americanrhetoric.com/speeches/lbjweshallovercome.htm",
+"https://www.americanrhetoric.com/speeches/mariocuomo1984dnc.htm",
+"https://www.americanrhetoric.com/speeches/jessejackson1984dnc.htm"]
 
 def get_lines(filename):
     """
@@ -141,42 +152,51 @@ class Text:
         with open(self.local_fn, 'r') as fp:
             self.text = fp.read()
 
-
 def get_extracted_speech(url):
-    """
-    Takes in url, then downloads the html from the url and strips the html
+    """Takes in url, then downloads the html from the url and strips the html
     and creates a file with the extracted speech
+    Not a fruitful function so no doctests possible
     """
-    html = BeautifulSoup(requests.get(url).text, 'html.parser') # gets file from the url and sets it to html
-    fout = open(html.title.text, "w") # makes or opens a file with title of html
-    speech = html.findAll("p")
-    start_flag = False
-    end_flag = False
-    for line in speech:
-        # line = line.text # strips html from line
-        line2 = line.text
-        if line2.strip().startswith("[AUTHENTICITY"):
-            print("Start on this line:",line2, line2.startswith("[AUTHENTICITY"))
-            start_flag = True
-        elif not line2.strip().startswith("[AUTHENTICITY"):
-            print("Start string not found", line2.startswith("[AUTHENTICITY"))
-        #
-        # if line2.find("<blockquote>"):
-        #     print("End on this line:",line2, line2.find("<blockquote>"))
-        #     end_flag = True
-        # elif not line2.find("<blockquote>"):
-        #     print("End string not found", line2.find("<blockquote>"))
+    # Set file title to the shortened title from the html
+    file_title = requests.get(url).text
+    file_title = file_title.replace("American Rhetoric","")
+    file_title = file_title.replace(": ","")
+    print(file_title)
 
-        if start_flag == True and end_flag == False:
-            fout.write(line.text)
+    html = BeautifulSoup(file_title, 'html.parser') # gets file from the url and sets it to html
+    fout = open(os.path.join("cache", html.title.text), "w") # makes or opens a file with title of html
+
+    # returns only the text with font Verdana or Droid Sans
+    speech = html.find_all(face="Verdana")
+    speech2 = html.find_all(face="Droid Sans")
+
+    # Writes the text from the html to a file as plain text
+    for line in speech:
+        fout.write(line.text)
+    for line in speech2:
+        fout.write(line.text)
     fout.close()
+
+def get_all_speeches(list):
+    """Takes in a list of URLs and rus get_extracted_speech for each of them
+    Not a fruitful function so no doctests possible
+    """
+    i = 0
+    for url in url_list:
+        get_extracted_speech(url_list[i])
+        i+=1
+        time.sleep(2)
 
 
 # Run this code when called from the command line
 if __name__ == "__main__":
     import doctest
 
-    get_extracted_speech("https://www.americanrhetoric.com/speeches/williamfaulknernobelprizeaddress.htm")
+    # Only do this once to download all speeches from list
+    # get_all_speeches(url_list)
+
+
+
 
     # Test get_words helper function
     # words_list = get_words(get_lines("Macbeth.txt"))
