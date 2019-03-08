@@ -1,18 +1,16 @@
 """
 Project 3 Text Miner Assignment
-Ideas
--Compare text from the 1500s on every 50 years and look at word freqency
-    -"translate" something from one era's dialect to another's? If possible
--compare certain works or famous speeches to different reading levels examples
--different dialects of english, maybe different parts of US
 -famous speeches and what made them great? Make something like a famous speech from that?
--company mottos or their very vauge descriptions
 -famous speeches and find most commonly repeated phrases and how often
  they are repeated vs non-famous speeches?
  https://www.americanrhetoric.com/top100speechesall.html
  https://www.americanrhetoric.com/speechbankm-r.htm
  https://www.bartleby.com/268/
  http://www.historyplace.com/speeches/previous.htm
+ TODO: implement cache
+ analyze text
+ cut off beginning and end of html
+ put downloaded speeches in git ignore
 """
 import math
 import os
@@ -20,6 +18,8 @@ import requests
 import sys
 import time
 import urllib.request
+from bs4 import BeautifulSoup
+import requests
 
 def get_lines(filename):
     """
@@ -141,45 +141,42 @@ class Text:
         with open(self.local_fn, 'r') as fp:
             self.text = fp.read()
 
-def get_files():
+
+def get_extracted_speech(url):
     """
-    Downloads html from files as text
+    Takes in url, then downloads the html from the url and strips the html
+    and creates a file with the extracted speech
     """
-    import time
+    html = BeautifulSoup(requests.get(url).text, 'html.parser') # gets file from the url and sets it to html
+    fout = open(html.title.text, "w") # makes or opens a file with title of html
+    speech = html.findAll("p")
+    start_flag = False
+    end_flag = False
+    for line in speech:
+        # line = line.text # strips html from line
+        line2 = line.text
+        if line2.strip().startswith("[AUTHENTICITY"):
+            print("Start on this line:",line2, line2.startswith("[AUTHENTICITY"))
+            start_flag = True
+        elif not line2.strip().startswith("[AUTHENTICITY"):
+            print("Start string not found", line2.startswith("[AUTHENTICITY"))
+        #
+        # if line2.find("<blockquote>"):
+        #     print("End on this line:",line2, line2.find("<blockquote>"))
+        #     end_flag = True
+        # elif not line2.find("<blockquote>"):
+        #     print("End string not found", line2.find("<blockquote>"))
 
-    urls = { "MLK": "https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
-             "JFK": "https://www.americanrhetoric.com/speeches/jfkinaugural.htm",
-             "FDR": "https://www.americanrhetoric.com/speeches/fdrfirstinaugural.html"
-           }
+        if start_flag == True and end_flag == False:
+            fout.write(line.text)
+    fout.close()
 
-    # texts = {}
-    for title, url in urls.items():
-        # t = Text(url)
-        # texts[title] = t
-        # return texts
-        urllib.request.urlretrieve(url,"Example"+str(title)+".txt")
-
-def extract_speech(speech_fn):
-
-    fin = open(speech_fn, "r")
-    # fout = open(speech_fn, 'w')
-    for line in fin:
-        start_num = line.find('AUTHENTICITY CERTIFIED: Text version below transcribed directly from audio. (2)')
-        # print(line)
-    #     line = line.replace(pattern, replacement)
-    #     fin.write(line)
-    # fin.close()
-    # fout.close()
-    return start_num
 
 # Run this code when called from the command line
 if __name__ == "__main__":
     import doctest
-    # print(requests.get("https://www.americanrhetoric.com/speeches/mlkihaveadream.htm").text)
 
-
-    # get_files()
-    extract_speech("ExampleMLK.txt")
+    get_extracted_speech("https://www.americanrhetoric.com/speeches/williamfaulknernobelprizeaddress.htm")
 
     # Test get_words helper function
     # words_list = get_words(get_lines("Macbeth.txt"))
