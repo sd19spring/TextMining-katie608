@@ -30,7 +30,21 @@ url_list = ["https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
 "https://www.americanrhetoric.com/speeches/jfkhoustonministers.html",
 "https://www.americanrhetoric.com/speeches/lbjweshallovercome.htm",
 "https://www.americanrhetoric.com/speeches/mariocuomo1984dnc.htm",
-"https://www.americanrhetoric.com/speeches/jessejackson1984dnc.htm"]
+"https://www.americanrhetoric.com/speeches/jessejackson1984dnc.htm",
+"https://www.americanrhetoric.com/speeches/barbarajordanjudiciarystatement.htm",
+"https://www.americanrhetoric.com/speeches/douglasmacarthurfarewelladdress.htm",
+"https://www.americanrhetoric.com/speeches/mlkivebeentothemountaintop.htm",
+"https://www.americanrhetoric.com/speeches/teddyrooseveltmuckrake.htm",
+"https://www.americanrhetoric.com/speeches/rfkonmlkdeath.html",
+"https://www.americanrhetoric.com/speeches/dwightdeisenhowerfarewell.html",
+"https://www.americanrhetoric.com/speeches/wilsonwarmessage.htm",
+"https://www.americanrhetoric.com/speeches/douglasmacarthurthayeraward.html",
+"https://www.americanrhetoric.com/speeches/richardnixongreatsilentmajority.html",
+"https://www.americanrhetoric.com/speeches/jfkberliner.html",
+"https://www.americanrhetoric.com/speeches/cdarrowpleaformercy.htm",
+"https://www.americanrhetoric.com/speeches/rconwellacresofdiamonds.htm",
+"https://www.americanrhetoric.com/speeches/ronaldreaganatimeforchoosing.htm"
+]
 
 """FORMATTING"""
 def strip_scheme(url):
@@ -215,15 +229,50 @@ def word_counter(words_list, num_entries):
 def phrase_counter(words_list, num_entries):
     """Returns a dictionary that counts occurances of 3 and 4 letter phrases in words_list
     """
-    d = dict()
+    phrase_list2 = []
+    phrase_list3 = []
+    phrase_list4 = []
+    i = 0
+    for i in range (len(words_list)-3):
+        phrase_list2.append(words_list[i]+" "+words_list[i+1])
+        phrase_list3.append(words_list[i]+" "+words_list[i+1]+" "+words_list[i+2])
+        phrase_list4.append(words_list[i]+" "+words_list[i+1]+" "+words_list[i+2]+" "+words_list[i+3])
 
-def analyze_all_files(function):
+        d2 = dict()
+        for phrase2 in phrase_list2:
+            d2[phrase2] = 1 + d2.get(phrase2,0)
+
+        d3 = dict()
+        for phrase3 in phrase_list3:
+            d3[phrase3] = 1 + d3.get(phrase3,0)
+
+        d4 = dict()
+        for phrase4 in phrase_list4:
+            d4[phrase4] = 1 + d4.get(phrase4,0)
+
+    sorted2 = sort_dictionary(d2, num_entries)
+    sorted3 = sort_dictionary(d3, num_entries)
+    sorted4 = sort_dictionary(d4, num_entries)
+    return("Frequency 2", sorted2, "Frequency 3", sorted3, "Freuquency 4", sorted4)
+
+
+def sort_dictionary(d, num_entries):
+    """Sorts a dictionary and returns sorted dictionary as a list
+    """
+    sorted_d = []
+    for key, value in d.items():
+        sorted_d.append((value, key))
+    sorted_d.sort()
+    sorted_d.reverse()
+    return (len(sorted_d), sorted_d[0:num_entries])
+
+def analyze_all_files(function, num_results):
     """Takes in an analysis function (like word counter) and preforms it on all
     files in cache directory
     """
     for speech_fn in os.listdir("cache"):
         analysis_list = []
-        analysis = function(get_words(get_lines(os.path.join("cache", speech_fn))), 40)
+        analysis = function(get_words(get_lines(os.path.join("cache", speech_fn))), num_results)
         analysis_list.append(analysis)
         print(analysis)
     return analysis_list
@@ -232,11 +281,12 @@ def analyze_all_files(function):
 if __name__ == "__main__":
     import doctest
 
-    # Only do this once to download all speeches from list
+    # Uncomment this when you want to download all speeches from url list
     # get_all_speeches(url_list)
 
     # print(word_counter(get_words(get_lines(os.path.join("cache", "Martin Luther King I Have a Dream Speech - "))), 20))
-    analyze_all_files(word_counter)
+    # print(get_words(get_lines(os.path.join("cache", "Martin Luther King I Have a Dream Speech - "))))
+    analyze_all_files(phrase_counter, 20)
 
     # Test get_words helper function
     # words_list = get_words(get_lines("Macbeth.txt"))
