@@ -176,9 +176,6 @@ def get_lines(filename):
             # Remove whitespace (or do whatever other processing you like)
             processed_line = line.strip()
             lines.append(processed_line)
-    fout = open("Final Results", "w")
-    fout.write(filename)
-    fout.close()
     return lines
 
 def get_words(lines_list):
@@ -227,9 +224,6 @@ def word_counter(words_list, num_entries):
         sorted_d.append((value, key))
     sorted_d.sort()
     sorted_d.reverse()
-    fout = open("Final Results", "w")
-    fout.write("Number of different words used:"+str(len(sorted_d))+"Frequency:"+ str(sorted_d[0:num_entries]))
-    fout.close()
     return ("Number of different words used:",len(sorted_d)), ("Frequency:", sorted_d[0:num_entries])
 
 def phrase_counter(words_list, num_entries):
@@ -256,14 +250,9 @@ def phrase_counter(words_list, num_entries):
         for phrase4 in phrase_list4:
             d4[phrase4] = 1 + d4.get(phrase4,0)
 
-    fout = open("Final Results", "w")
     sorted2 = sort_dictionary(d2, num_entries)
-    fout.write(str(sorted2))
     sorted3 = sort_dictionary(d3, num_entries)
-    fout.write(str(sorted3))
     sorted4 = sort_dictionary(d4, num_entries)
-    fout.write(str(sorted4))
-    fout.close()
     return("Frequency 2", sorted2, "Frequency 3", sorted3, "Freuquency 4", sorted4)
 
 
@@ -281,7 +270,7 @@ def analyze_all_files(function, num_results):
     """Takes in an analysis function (like word counter) and preforms it on all
     files in cache directory
     """
-    # fout = open("Final Results", "w")
+    fout = open("Final Results", "w")
     for speech_fn in os.listdir("cache"):
         analysis_list = []
 
@@ -292,8 +281,8 @@ def analyze_all_files(function, num_results):
         phrase_analysis = phrase_counter(get_words(get_lines(os.path.join("cache", speech_fn))), num_results)
         analysis_list.append(phrase_analysis)
         print(phrase_analysis)
-    #     fout.write(str(speech_fn + str(word_analysis) + str(phrase_analysis))
-    # fout.close()
+        fout.write(str(speech_fn) + str(word_analysis) + str(phrase_analysis))
+    fout.close()
     return analysis_list
 
 # Run this code when called from the command line
