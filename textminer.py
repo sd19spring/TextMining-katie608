@@ -32,51 +32,7 @@ url_list = ["https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
 "https://www.americanrhetoric.com/speeches/mariocuomo1984dnc.htm",
 "https://www.americanrhetoric.com/speeches/jessejackson1984dnc.htm"]
 
-def get_lines(filename):
-    """
-    Read all lines from `filename` and return a list of strings,
-    one per line, with whitespace stripped from the ends.
-
-    >>> lines_list = get_lines("Macbeth.txt")
-    >>> print(lines_list[0:2])
-    ['Tomorrow, and tomorrow, and tomorrow,', 'Creeps in this petty pace from day to day,']
-    """
-    lines = []
-    with open(filename) as fp:
-        for line in fp:
-            # Remove whitespace (or do whatever other processing you like)
-            processed_line = line.strip()
-            lines.append(processed_line)
-    return lines
-
-def get_words(lines_list):
-    """
-    Takes in lines_list and returns a list of strings as words,
-    with whitespace and punctuation stripped from the ends.
-
-    >>> words_list = get_words(get_lines("Macbeth.txt"))
-    >>> print(words_list[4:14])
-    ['tomorrow', 'creeps', 'in', 'this', 'petty', 'pace', 'from', 'day', 'to', 'day']
-    """
-    words_list = []
-    for line in lines_list:
-        line = line + " "
-        processed_line = line.strip('#$%&()*+-/:;""''<=>@[\]^_`{|}~')
-        i = 0
-        j = 0
-        while i < len(processed_line):
-            if processed_line[i] == " ":
-                word = processed_line[j:i]
-                word = word.strip('!#$%&()*+,-./:;""''<=>?@[\]^_`{|}~ ')
-                word = word.lower()
-                if word != "":
-                    words_list.append(word)
-                    j = i
-                i += 1
-            else:
-                i += 1
-    return words_list
-
+"""FORMATTING"""
 def strip_scheme(url):
     """
     Return 'url' without scheme part (e.g. "http://")
@@ -188,6 +144,90 @@ def get_all_speeches(list):
         time.sleep(2)
 
 
+"""ANALYSIS"""
+def get_lines(filename):
+    """
+    Read all lines from `filename` and return a list of strings,
+    one per line, with whitespace stripped from the ends.
+
+    >>> lines_list = get_lines("Macbeth.txt")
+    Macbeth.txt
+    >>> print(lines_list[0:2])
+    ['Tomorrow, and tomorrow, and tomorrow,', 'Creeps in this petty pace from day to day,']
+    """
+    print(filename)
+    lines = []
+    with open(filename) as fp:
+        for line in fp:
+            # Remove whitespace (or do whatever other processing you like)
+            processed_line = line.strip()
+            lines.append(processed_line)
+    return lines
+
+def get_words(lines_list):
+    """
+    Takes in lines_list and returns a list of strings as words,
+    with whitespace and punctuation stripped from the ends.
+
+    >>> words_list = get_words(get_lines("Macbeth.txt"))
+    Macbeth.txt
+    >>> print(words_list[4:14])
+    ['tomorrow', 'creeps', 'in', 'this', 'petty', 'pace', 'from', 'day', 'to', 'day']
+    """
+    words_list = []
+    for line in lines_list:
+        line = line + " "
+        processed_line = line.strip('#$%&()*+-/:;""''<=>@[\]^_`{|}~')
+        i = 0
+        j = 0
+        while i < len(processed_line):
+            if processed_line[i] == " ":
+                word = processed_line[j:i]
+                word = word.strip('!#$%&()*+,-./:;""''<=>?@[\]^_`{|}~ ')
+                word = word.lower()
+                if word != "":
+                    words_list.append(word)
+                    j = i
+                i += 1
+            else:
+                i += 1
+    return words_list
+
+
+def word_counter(words_list, num_entries):
+    """Return a dictionary that counts occurrences of each word in words_list
+
+    Examples:
+    >>> word_counter(["word", "word", "notword"], 2)
+    (('Number of different words used:', 2), ('Frequency:', [(2, 'word'), (1, 'notword')]))
+    """
+    d = dict()
+    for word in words_list:
+        d[word] = 1 + d.get(word,0)
+
+    sorted_d = []
+    for key, value in d.items():
+        sorted_d.append((value, key))
+    sorted_d.sort()
+    sorted_d.reverse()
+    return ("Number of different words used:",len(sorted_d)), ("Frequency:", sorted_d[0:num_entries])
+
+def phrase_counter(words_list, num_entries):
+    """Returns a dictionary that counts occurances of 3 and 4 letter phrases in words_list
+    """
+    d = dict()
+
+def analyze_all_files(function):
+    """Takes in an analysis function (like word counter) and preforms it on all
+    files in cache directory
+    """
+    for speech_fn in os.listdir("cache"):
+        analysis_list = []
+        analysis = function(get_words(get_lines(os.path.join("cache", speech_fn))), 40)
+        analysis_list.append(analysis)
+        print(analysis)
+    return analysis_list
+
 # Run this code when called from the command line
 if __name__ == "__main__":
     import doctest
@@ -195,8 +235,8 @@ if __name__ == "__main__":
     # Only do this once to download all speeches from list
     # get_all_speeches(url_list)
 
-
-
+    # print(word_counter(get_words(get_lines(os.path.join("cache", "Martin Luther King I Have a Dream Speech - "))), 20))
+    analyze_all_files(word_counter)
 
     # Test get_words helper function
     # words_list = get_words(get_lines("Macbeth.txt"))
