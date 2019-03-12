@@ -2,15 +2,8 @@
 Project 3 Text Miner Assignment
 Katie Foster
 
--famous speeches and what made them great? Make something like a famous speech from that?
--famous speeches and find most commonly repeated phrases and how often
- they are repeated vs non-famous speeches?
- https://www.americanrhetoric.com/top100speechesall.html
- https://www.americanrhetoric.com/speechbankm-r.htm
- https://www.bartleby.com/268/
- http://www.historyplace.com/speeches/previous.htm
- TODO:
- analyze text
+Source for speeches:
+https://www.americanrhetoric.com/top100speechesall.html
 """
 import math
 import os
@@ -46,22 +39,7 @@ url_list = ["https://www.americanrhetoric.com/speeches/mlkihaveadream.htm",
 "https://www.americanrhetoric.com/speeches/ronaldreaganatimeforchoosing.htm"
 ]
 
-"""FORMATTING"""
-def strip_scheme(url):
-    """
-    Return 'url' without scheme part (e.g. "http://")
-
-    >>> strip_scheme("https://www.example.com")
-    'www.example.com'
-    >>> strip_scheme("http://www.gutenberg.org/files/2701/2701-0.txt")
-    'www.gutenberg.org/files/2701/2701-0.txt'
-    """
-    # TODO: This ad-hoc implementation is fairly fragile
-    # and doesn't support e.g. URL parameters (e.g. ?sort=reverse&lang=fr)
-    # For a more robust implementation, consider using
-    # https://docs.python.org/3/library/urllib.parse.html
-    scheme, remainder = url.split("://")
-    return remainder
+"""DOWNLOADING AND FORMATTING"""
 
 class Text:
     """
@@ -173,7 +151,6 @@ def get_lines(filename):
     lines = []
     with open(filename) as fp:
         for line in fp:
-            # Remove whitespace (or do whatever other processing you like)
             processed_line = line.strip()
             lines.append(processed_line)
     return lines
@@ -214,6 +191,9 @@ def word_counter(words_list, num_entries):
     Examples:
     >>> word_counter(["word", "word", "notword"], 2)
     (('Number of different words used:', 2), ('Frequency:', [(2, 'word'), (1, 'notword')]))
+    >>> word_counter(get_words(get_lines("Macbeth.txt")),4)
+    Macbeth.txt
+    (('Number of different words used:', 58), ('Frequency:', [(6, 'and'), (3, 'tomorrow'), (3, 'to'), (3, 'the')]))
     """
     d = dict()
     for word in words_list:
@@ -227,13 +207,16 @@ def word_counter(words_list, num_entries):
     return ("Number of different words used:",len(sorted_d)), ("Frequency:", sorted_d[0:num_entries])
 
 def phrase_counter(words_list, num_entries):
-    """Returns a dictionary that counts occurances of 3 and 4 letter phrases in words_list
+    """Returns a dictionary that counts occurances of 2, 3 and 4 letter phrases in words_list
+    >>> phrase_counter(get_words(get_lines("Macbeth.txt")),2)
+    Macbeth.txt
+    ('Frequency 2', [(2, 'tomorrow and'), (2, 'day to')], 'Frequency 3', [(2, 'tomorrow and tomorrow'), (1, 'yesterdays have lighted')], 'Freuquency 4', [(1, 'yesterdays have lighted fools'), (1, 'way to dusty death')])
     """
     phrase_list2 = []
     phrase_list3 = []
     phrase_list4 = []
     i = 0
-    for i in range (len(words_list)-3):
+    for i in range (len(words_list)-3): #subtracting 3 was not a great solution because it would exclude any 2 or 3 word phrases at the end of the doccument, but I could not think of a better way
         phrase_list2.append(words_list[i]+" "+words_list[i+1])
         phrase_list3.append(words_list[i]+" "+words_list[i+1]+" "+words_list[i+2])
         phrase_list4.append(words_list[i]+" "+words_list[i+1]+" "+words_list[i+2]+" "+words_list[i+3])
@@ -264,11 +247,13 @@ def sort_dictionary(d, num_entries):
         sorted_d.append((value, key))
     sorted_d.sort()
     sorted_d.reverse()
-    return (len(sorted_d), sorted_d[0:num_entries])
+    # return (len(sorted_d), sorted_d[0:num_entries])
+    return sorted_d[0:num_entries]
 
 def analyze_all_files(function, num_results):
-    """Takes in an analysis function (like word counter) and preforms it on all
-    files in cache directory
+    """Takes in an analysis function (like word counter) and performs it on all
+    files in the cache directory
+    Not a fruitful function so no doctest
     """
     fout = open("Final Results", "w")
     for speech_fn in os.listdir("cache"):
@@ -281,9 +266,9 @@ def analyze_all_files(function, num_results):
         phrase_analysis = phrase_counter(get_words(get_lines(os.path.join("cache", speech_fn))), num_results)
         analysis_list.append(phrase_analysis)
         print(phrase_analysis)
-        fout.write(str(speech_fn) + str(word_analysis) + str(phrase_analysis))
+        fout.write(str(speech_fn) +"\n"+ str(word_analysis) +"\n"+ str(phrase_analysis)+"\n \n")
     fout.close()
-    return analysis_list
+
 
 # Run this code when called from the command line
 if __name__ == "__main__":
@@ -292,13 +277,8 @@ if __name__ == "__main__":
     # Uncomment this when you want to download all speeches from url list
     # get_all_speeches(url_list)
 
-    # print(word_counter(get_words(get_lines(os.path.join("cache", "Martin Luther King I Have a Dream Speech - "))), 20))
-    # print(get_words(get_lines(os.path.join("cache", "Martin Luther King I Have a Dream Speech - "))))
+    # runs the entire analysis part of the program for all files in cache
     analyze_all_files(phrase_counter, 20)
-
-    # Test get_words helper function
-    # words_list = get_words(get_lines("Macbeth.txt"))
-    # print(words_list)
 
     # Run all doctests in this file
     doctest.testmod()

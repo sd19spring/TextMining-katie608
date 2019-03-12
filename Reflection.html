@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 5.1.6.2 (Linux)"/>
+	<meta name="created" content="2019-03-11T23:31:26.782926886"/>
+	<meta name="changed" content="2019-03-12T02:16:28.463445220"/>
+	<style type="text/css">
+		@page { margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 120% }
+	</style>
+</head>
+<body lang="en-US" dir="ltr">
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">Katie
+Foster</span></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">Software
+Design</span></span></span></font></font></font></span></strong></p>
+<p align="center" style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><b>Mini
+Project 3 Reflection</b></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><b>Project
+Overview</b></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt">For
+my project, I used several famous speeches from throughout history.
+The vast majority of them were by Americans in the 20<sup>th</sup>
+century, since those were the speeches that the website that I used
+as my sourced had, however I added a couple more text files of famous
+speeches that I thought should be included by copy-pasting from
+several sources into a text file. I analyzed them for both word and
+phrase frequency, because I was curious whether repetition of key
+phrases was what made a speech great. </font></font></font>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><b>Implementation</b></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">There
+are two main parts to my program. The first part downloads the html
+files and then processes them into readable plain text, which
+hopefully only includes the text of the speech. It then saves the
+text of the speech as an html file. </span></span></span></font></font></font></span><span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">There
+are two functions in this section. The first one downloads the file
+from the internet using the requests.get method. Then, I used the
+Beautiful Soup package extract only the </span></span></span></font></font></font></span><span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">html
+with either the font Verdana or Droid Sans, since those were the two
+that the speech text were most commonly in. After doing that, I
+opened a file with the name of the speech, which was taken from the
+html title, and then wrote the extracted speech to the file. Then,
+there is one other function that simply repeats the previously
+described process for </span></span></span></font></font></font></span><span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">all
+the files in the cache directory, but waits two seconds between each
+request so </span></span></span></font></font></font></span><span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">as
+not to suspiciously make too many requests to the server from the
+same ip address at once. </span></span></span></font></font></font></span>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">T</span></span></span></font></font></font></span><span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">he
+second part of the program does all the text analysis. The first
+function takes in a filename, opens the file from the cache, and
+returns all the lines from the file in list format. Then, the next
+function takes in that list of lines, and goes through list of lines,
+stripping punctuation, making everything lowercase, and adding each
+word to a list of words. The next two functions operate on this list
+of words. The two key analysis functions are pretty similar. The
+first function counts all the words in the document, and adds them to
+a dictionary. It then counts the occurrences of each word, and
+returns the dictionary with the word frequency. The second function
+does the same thing, except it makes dictionaries with the frequency
+of  certain 2, 3, and 4 letter phrases. The function contains a loop
+which goes through the words list, and finds all possible 2, 3, and 4
+letter phrases, and adds them to their corresponding lists. The
+function then creates a dictionary for each of the lengths of
+phrases. Then, the dictionaries from the word counter and phrase
+counter functions are sorted within their respective functions by the
+sort dictionary function, which takes in a dictionary, sorts it by
+frequency value, and returns a sorted list. </span></span></span></font></font></font></span><span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">Finally,
+the last function runs the analysis on all the files within the
+cache, and writes a text file containing the file name, word
+frequency list, and phrase frequency lists. </span></span></span></font></font></font></span>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><b>Results</b></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<ul>
+	<p style="border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+	<font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt">My
+	results were somewhat interesting, but were not very well organized
+	(I could not get the “\n” string to create a new line for some
+	reason).  However, it was quite interesting to look at the most
+	commonly repeated phrases for speeches I have heard before, such as
+	the Gettysburg Address or the I Have a Dream Speech. It turns out
+	that what I thought would be some of the most commonly repeated
+	phrases in the I Have a Dream Speech were not actually as common as
+	I thought they would be. The most commonly repeated 4 -letter
+	phrase, with 8 repetitions, was “will be able to,” which makes
+	sense in hindsight, but was slightly surprising. Martin Luther King
+	Jr. uses a whole lot of repetition in his speeches compared to other
+	speeches. For example, the longest and most verbose speech that I
+	looked at was Fred	rick Douglass’ “What to a Slave is the Fourth
+	of July” speech, which contained 2651 unique words, compared to “I
+	Have a Dream”’s 557 unique words. Seeing as Douglass used many
+	more unique words, it makes sense that he would not repeat words or
+	phrases as much. He had only 10 repetitions of 4-letter phrases
+	compared to MLK’s 20. Another interesting thing I found was that
+	the mid-length speeches seemed to have the most repetition.
+	Obviously there is not much room for repetition in the 2-minute
+	Gettysburg Address, but I am not sure why the longer speeches lack
+	repetition. </font></font></font>
+	</p>
+</ul>
+<p style="border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt">There
+were a lot of interesting little tidbits like this one, and I enjoyed
+poking through the data. If I were to do more work, I would probably
+write some function that would help me to get more analysis from my
+results. For example, I could compare speeches by the same person to
+speeches by different people in word and phrase frequency. I would
+also like to try Markov Analysis to make a famous speech of my own. </font></font></font>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><b>Alignment</b></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt">I
+set out to explore phrase frequency of famous speeches, and that is
+pretty much what I ended up doing. I wish I could have explored
+speeches from more diverse sources. I only had two speeches from
+non-Americans, and only a couple from before the 20<sup>th</sup>
+century. And the vast majority were by white men, which is not ideal,
+but is to be expected when using only speeches originally written in
+English. Maybe I can figure out how to add to my data set with
+speeches in other languages. I would probably need to translate them
+to English, especially if they are in a non-latin alphabet, but it
+would also be interesting to figure out whether the most commonly
+repeated phrases are similar or different in different languages. </font></font></font>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt">The
+set of questions that sparked my exploration was started when I
+learned about speech writing in 8<sup>th</sup> grade, and my teacher
+told me that repetition was important. I noticed that there is a lot
+of repetition in famous speeches, and that is part of what makes them
+so powerful. So now that I had these tools at my disposal, I decided
+to use them to figure out how much repetition was really in speeches.
+I imagined the results I would get were pretty much what I got, but
+in hindsight, it would have been nice to plan some analysis of the
+analysis. For example, some way of assigning a value for how much
+repetition was in a speech, so I could directly compare them with
+each other.  </font></font></font>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt">I
+think the data source I used for the speeches was pretty good, but I
+also supplemented my data set with other speeches that I thought
+would be interesting to analyze, like the Gettysburg Address, Nelson
+Mandela’s “I am Prepared to Die”, George Washington’s
+Farewell Address, Lincoln’s second Inaugural Address (the only
+presidential inauguration speech to ever make me cry), Chief Joseph’s
+surrender speech, Fredrick Douglass’ “What to the Slave is the
+Fourth of July”, and Winston Churchill’s “We Shall Fight on the
+Beaches” speech. With these added ones, I was able to get a couple
+of non-Americans, and a couple of speeches given before the 20<sup>th</sup>
+century in my data. I am very confident that my analysis is 95%
+correct. There is one small thing I would change if I had the time,
+which is that my program does not take into account the 2 and 3
+letter phrases right at the end of the document. I was not quite sure
+how else to prevent an out of range error. But anyway, my data is
+very accurate, it is just not very filtered. </font></font></font>
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<strong><span style="font-variant: normal"><font color="#363636"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><b>Reflection</b></span></span></font></font></font></span></strong></p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; border: none; padding: 0in; orphans: 2; widows: 2">
+<span style="font-variant: normal"><font color="#373a3c"><font face="Georgia, Cambria, Times New Roman, Times, serif"><font size="2" style="font-size: 9pt"><span style="letter-spacing: normal"><span style="font-style: normal"><span style="font-weight: normal">I
+am pretty proud of myself for completing this project, especially
+since I completed the analysis portion without help from anyone. I
+did need a lot of help with extracting the speech from the html. This
+is the longest program I have written, and all the functions work
+together to produce a result. I think this project was pretty well
+scoped. I wish I could have done a bit more, but I have had a very
+busy few weeks from FWOP’s performances, and other things going on.
+I might work on this project, or at least play with the code some
+more, because it produces interesting results that are fun to comb
+through. I also did pretty well writing the code piece by piece, and
+testing along the way. I included doctests where they were
+appropriate, and commented my code well. </span></span></span></font></font></font></span>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>
